@@ -27,12 +27,14 @@ authRouter.post("/register", async (req, res) => {
 // ให้สร้าง API เพื่อเอาไว้ Login ตัว User ตามตารางที่ออกแบบไว้
 
 authRouter.post("/login", async (req, res) => {
+  console.log(req.body);
   //ตรวจสอบ Credentials
   const user = await db
     .collection("users")
     .findOne({ username: req.body.username });
+  //console.log(user);
   if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    return res.json({ message: "User not found" });
   }
 
   //สร้าง Conditional Logic ตรวจสอบว่า Password ใน Database กับ Password ที่ Client ส่งมาตรงกันหรือไม่จะต้องใช้ Function bcrypt.compare

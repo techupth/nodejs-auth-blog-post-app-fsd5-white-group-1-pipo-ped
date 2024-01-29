@@ -12,6 +12,8 @@ function AuthProvider(props) {
     user: null,
   });
 
+  const navigate = useNavigate();
+
   // 🐨 Todo: Exercise #4
   //  ให้เขียน Logic ของ Function `login` ตรงนี้
   //  Function `login` ทำหน้าที่สร้าง Request ไปที่ API POST /login
@@ -30,7 +32,7 @@ function AuthProvider(props) {
 
   // 🐨 Todo: Exercise #2
   //  ให้เขียน Logic ของ Function `register` ตรงนี้
-  const navigate = useNavigate();
+
   //  Function register ทำหน้าที่สร้าง Request ไปที่ API POST /register ที่สร้างไว้ด้านบนพร้อมกับ Body ที่กำหนดไว้ในตารางที่ออกแบบไว้
   const register = async (data) => {
     await axios.post("http://localhost:4000/auth/register", data);
@@ -38,10 +40,12 @@ function AuthProvider(props) {
     navigate("/login");
   };
 
+  // 🐨 Todo: Exercise #7
+  //  ให้เขียน Logic ของ Function `logout` ตรงนี้
+  //  Function logout ทำหน้าที่ในการลบ JWT Token ออกจาก Local Storage
   const logout = () => {
-    // 🐨 Todo: Exercise #7
-    //  ให้เขียน Logic ของ Function `logout` ตรงนี้
-    //  Function logout ทำหน้าที่ในการลบ JWT Token ออกจาก Local Storage
+    localStorage.removeItem("token");
+    setState({ ...state, user: null });
   };
 
   const isAuthenticated = Boolean(localStorage.getItem("token"));
